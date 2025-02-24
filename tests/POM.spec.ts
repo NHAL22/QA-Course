@@ -57,6 +57,8 @@ test(`Page object model for Calculate Holiday Entitlement for a full leave year 
     const workOutHolidayPage: WorkOutHolidayPage = new WorkOutHolidayPage();
     await workOutHolidayPage.checkPageLoads(page);
     await workOutHolidayPage.continueOn(page);
+    const answersPage: AnswersPage = new AnswersPage();
+    await answersPage.checkPageLoadsFirstScenario(page);
 });
 
 test(`Calculate Holiday Entitlement for someone starting and leaving part way through a leave year with shifts and other options`, async ({ page }): Promise<void> => {
@@ -91,7 +93,35 @@ test(`Calculate Holiday Entitlement for someone starting and leaving part way th
     const daysInTheShiftPatternPage: daysInTheShiftPatternPage = new DaysInTheShiftPatternPage();
     await daysInTheShiftPatternPage.checkPageLoads(page);
     await daysInTheShiftPatternPage.continueOn(page);
+    const answersPage: AnswersPage = new AnswersPage();
+    await answersPage.checkPageLoadsSecondScenario(page);
 });
+
+test(`Page object model unhappy path for scenario 2`, async ({ page }): Promise<void> => {
+    const landingPage: LandingPage = new LandingPage();
+    await landingPage.checkPageLoads(page);
+    await landingPage.continueOn(page);
+    const irregularHoursPage: IrregularHoursPage = new IrregularHoursPage();
+    await irregularHoursPage.checkPageLoads(page);
+    await irregularHoursPage.selectYes(page);
+    await irregularHoursPage.continueOn(page);
+    const leaveYearStartPage = new LeaveYearStartPage();
+    await leaveYearStartPage.checkPageLoads(page);
+    await leaveYearStartPage.continueOn(page);
+    const entitlementBasedOnPage: HolidayEntitlementPage = new HolidayEntitlementPage();
+    await entitlementBasedOnPage.checkPageLoads(page);
+    await entitlementBasedOnPage.continueOnWithShifts(page);
+    const calculateHolidayPage: calculateHolidayPage = new CalculateHolidayPage();
+    await calculateHolidayPage.checkPageLoads(page);
+    await calculateHolidayPage.continueOnWithLastOption(page);
+    const employmentStartDatePage: employmentStartDatePage = new EmploymentStartDatePage();
+    await employmentStartDatePage.checkPageLoads(page);
+    await employmentStartDatePage.continueOn(page);
+    const employmentEndDatePage: employmentEndDatePage = new EmploymentEndDate();
+    await employmentEndDatePage.checkPageLoads(page);
+    await employmentEndDatePage.triggerErrorMessages(page);
+});
+
 
 test(`Page object model unhappy path`, async ({ page }): Promise<void> => {
     const landingPage: LandingPage = new LandingPage();
