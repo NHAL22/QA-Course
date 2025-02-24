@@ -1,2 +1,2 @@
 # my-playwright-project
-POM file contains awnswers to all assessment questions
+POM.spec file contains awnswers to all assessment questions and repo has all added content/page script files relative to this.
