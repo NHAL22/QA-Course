@@ -1,0 +1,12 @@
+{
+  "name": "my-playwright-project",
+  "packageManager": "yarn@4.6.0",
+  "devDependencies": {
+    "@axe-core/playwright": "^4.10.1",
+    "@playwright/test": "^1.50.1",
+    "@types/node": "^22.13.2",
+    "playwright": "^1.50.1",
+    "typescript": "^5.7.3"
+  },
+  "test": "playwright test --project chromium --headed"
+}
